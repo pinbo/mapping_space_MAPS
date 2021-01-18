@@ -10,9 +10,6 @@ fn main() {
     let mut reader = BufReader::new(input.lock());
     let mut first_line = String::new();
     let _ = reader.read_line(&mut first_line);
-    // let ff = first_line.split("\t");
-    // let vec = ff.collect::<Vec<&str>>();
-    // let ncol = vec.len();
     let ncol = first_line.split("\t").count();
     let nsample = (ncol - 3) / 4;
     println!("First line has {} columns and {} samples.", ncol, nsample);
@@ -28,22 +25,16 @@ fn main() {
         let mut n = 0;
         let mut target = 7;
         for word in line.unwrap().split("\t") {
-            // println!("word '{}'", word);
             n += 1;
             if n == target {
                 target += 4;
                 if word == "." {
                     nmiss += 1;
                     if nmiss > max_missing {break}
-                // } else if word >= &min_cov_str || word.len() > min_cov_str.len() {
-                //     ngood += 1;
-                // } else {
-                //     nmiss += 1;
-                //     if nmiss > max_missing {break}
                 } else {
                     let nn: usize = word.parse().unwrap();
                     if nn >= min_cov {
-                        ngood += 1
+                        ngood += 1;
                     } else {
                         nmiss += 1;
                         if nmiss > max_missing {break}
@@ -53,18 +44,6 @@ fn main() {
                 continue;
             }
         }
-        // Method 2: split to string vector: much much slower
-        // let vec = line_to_words(line.unwrap());
-        // for x in (6..ncol).step_by(4) {
-        //     if vec[x] == "." {
-        //         nmiss += 1;
-        //         if nmiss > max_missing {break}
-        //     }
-        // }
-        // after checking all the fields
-        // println!("good libs {}", ngood);
-        // println!("bad libs {}", nmiss);
-        // if nmiss <= max_missing {
         if ngood >= nsample - min_cov  {
             good_lines += 1;
         }
@@ -72,7 +51,4 @@ fn main() {
     println!("The input has {} good lines.", good_lines);
 }
 
-// fn line_to_words(line: String) -> Vec<String> {
-//     line.split("\t").map(str::to_string).collect()
-// }
 
