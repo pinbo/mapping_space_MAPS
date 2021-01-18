@@ -19,7 +19,7 @@ fn main() {
     let max_missing = 4;
     let mut good_lines = 0;
     let min_cov = 2;
-    let min_cov_str = min_cov.to_string();
+    // let min_cov_str = min_cov.to_string();
 
     for line in reader.lines() {
         let mut nmiss = 0;
@@ -35,11 +35,19 @@ fn main() {
                 if word == "." {
                     nmiss += 1;
                     if nmiss > max_missing {break}
-                } else if word >= &min_cov_str || word.len() > min_cov_str.len() {
-                    ngood += 1;
+                // } else if word >= &min_cov_str || word.len() > min_cov_str.len() {
+                //     ngood += 1;
+                // } else {
+                //     nmiss += 1;
+                //     if nmiss > max_missing {break}
                 } else {
-                    nmiss += 1;
-                    if nmiss > max_missing {break}
+                    let nn: usize = word.parse().unwrap();
+                    if nn >= min_cov {
+                        ngood += 1
+                    } else {
+                        nmiss += 1;
+                        if nmiss > max_missing {break}
+                    }
                 }
             } else {
                 continue;
