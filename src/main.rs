@@ -18,9 +18,12 @@ fn main() {
     println!("First line has {} columns and {} samples.", ncol, nsample);
     let max_missing = 4;
     let mut good_lines = 0;
+    let min_cov = 2;
+    let min_cov_str = min_cov.to_string();
 
     for line in reader.lines() {
         let mut nmiss = 0;
+        let mut ngood = 0;
         // Method 1: direct loop
         let mut n = 0;
         let mut target = 7;
@@ -30,6 +33,11 @@ fn main() {
             if n == target {
                 target += 4;
                 if word == "." {
+                    nmiss += 1;
+                    if nmiss > max_missing {break}
+                } else if word >= &min_cov_str || word.len() > min_cov_str.len() {
+                    ngood += 1;
+                } else {
                     nmiss += 1;
                     if nmiss > max_missing {break}
                 }
@@ -46,7 +54,10 @@ fn main() {
         //     }
         // }
         // after checking all the fields
-        if nmiss <= max_missing {
+        // println!("good libs {}", ngood);
+        // println!("bad libs {}", nmiss);
+        // if nmiss <= max_missing {
+        if ngood >= nsample - min_cov  {
             good_lines += 1;
         }
     }
