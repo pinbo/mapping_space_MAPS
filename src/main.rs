@@ -18,45 +18,42 @@ fn main() {
     println!("First line has {} columns and {} samples.", ncol, nsample);
     let max_missing = 4;
     let mut good_lines = 0;
-    // let mut nline = 0;
 
     for line in reader.lines() {
-        // nline += 1;
-        // let mut n = 0;
-        // let mut target = 7;
         let mut nmiss = 0;
         // Method 1: direct loop
-        // for word in line.unwrap().split("\t") {
-        //     // println!("word '{}'", word);
-        //     n += 1;
-        //     if n == target {
-        //         target += 4;
-        //         if word == "." {
-        //             nmiss += 1;
-        //             if nmiss > max_missing {break}
-        //         }
-        //     } else {
-        //         continue;
-        //     }
-        // }
-        // Method 2: split to string vector
-        let vec = line_to_words(line.unwrap());
-        for x in (6..ncol).step_by(4) {
-            if vec[x] == "." {
-                nmiss += 1;
-                if nmiss > max_missing {break}
+        let mut n = 0;
+        let mut target = 7;
+        for word in line.unwrap().split("\t") {
+            // println!("word '{}'", word);
+            n += 1;
+            if n == target {
+                target += 4;
+                if word == "." {
+                    nmiss += 1;
+                    if nmiss > max_missing {break}
+                }
+            } else {
+                continue;
             }
         }
+        // Method 2: split to string vector: much much slower
+        // let vec = line_to_words(line.unwrap());
+        // for x in (6..ncol).step_by(4) {
+        //     if vec[x] == "." {
+        //         nmiss += 1;
+        //         if nmiss > max_missing {break}
+        //     }
+        // }
         // after checking all the fields
         if nmiss <= max_missing {
             good_lines += 1;
-            // println!("Good line is\n{}", nline);
         }
     }
     println!("The input has {} good lines.", good_lines);
 }
 
-fn line_to_words(line: String) -> Vec<String> {
-    line.split_whitespace().map(str::to_string).collect()
-}
+// fn line_to_words(line: String) -> Vec<String> {
+//     line.split("\t").map(str::to_string).collect()
+// }
 
