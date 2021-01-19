@@ -14,6 +14,7 @@ fn main() {
     let nsample = (ncol - 3) / 4;
     println!("First line has {} columns and {} samples.", ncol, nsample);
     let max_missing = 4;
+    let min_lib_count = nsample - max_missing;
     let mut good_lines = 0;
     // let min_cov = 2;
     // let min_cov_str = min_cov.to_string();
@@ -44,8 +45,7 @@ fn main() {
                 continue;
             }
         }
-        println!("nsample - max_missing is {}", nsample - max_missing);
-        if ngood >= nsample - max_missing {
+        if ngood >= min_lib_count {
             good_lines += 1;
         }
     }
