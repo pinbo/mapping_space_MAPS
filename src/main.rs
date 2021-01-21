@@ -64,12 +64,14 @@ fn main() {
     println!("The input has {} good lines.", good_lines);
     let mut total = 0;
     let mut gc_count = 0;
-    let nts = ["A".to_string(), "T".to_string(), "G".to_string(), "C".to_string(), "a".to_string(), "t".to_string(), "g".to_string(), "c".to_string()];
-    let gc = ["G".to_string(), "C".to_string(), "g".to_string(), "c".to_string()];
+    // let nts = ["A".to_string(), "T".to_string(), "G".to_string(), "C".to_string(), "a".to_string(), "t".to_string(), "g".to_string(), "c".to_string()];
+    // let gc = ["G".to_string(), "C".to_string(), "g".to_string(), "c".to_string()];
+    let nts = "ATGCatgc";
+    let gc = "GCgc";
     for (key, value) in &map {
         println!("{}\t{}", &key, value);
-        if nts.contains(&key) {total += value;}
-        if gc.contains(&key) {gc_count += value;}
+        if nts.contains(key) {total += value;}
+        if gc.contains(key) {gc_count += value;}
     }
     // let pct = gc / nts;
     println!("GC% is {:.2}%", (gc_count as f64 / total as f64) * 100.0);
