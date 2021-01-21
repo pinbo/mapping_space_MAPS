@@ -1,5 +1,6 @@
 // v0.2.0: output A T G C counts
-
+// v0.3.0: add options
+// to make dynamic smaller app: cargo rustc --release -- -C prefer-dynamic
 use std::io::{self, BufRead, BufReader};
 // use std::env;
 use std::collections::HashMap;
